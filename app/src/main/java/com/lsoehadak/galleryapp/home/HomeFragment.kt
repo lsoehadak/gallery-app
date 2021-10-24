@@ -40,7 +40,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var timer = Timer()
-
         fragmentHomeBinding.etSearchImage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -82,7 +81,7 @@ class HomeFragment : Fragment() {
                 imageList,
                 onItemSelectedListener = {
                     val intent = Intent(context, DetailImageActivity::class.java).apply {
-                        putExtra(DetailImageActivity.EXTRA_IMAGE_ENTITIY, it)
+                        putExtra(DetailImageActivity.EXTRA_IMAGE_ENTITY, it)
                     }
                     startActivity(intent)
                 })
@@ -205,7 +204,7 @@ class HomeFragment : Fragment() {
                         val ids = arrayListOf<String>()
                         for (data in dataArr) {
                             val dataObj = data.asJsonObject
-                            ids.add(dataObj.getString("id")!!)
+                            ids.add(dataObj.getString("id"))
                         }
 
                         getImagesInfo(ids, 0)

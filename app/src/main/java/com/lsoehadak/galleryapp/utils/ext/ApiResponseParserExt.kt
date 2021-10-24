@@ -23,9 +23,9 @@ fun Response<JsonObject>.getConfigData(): JsonObject {
 
 fun JsonObject.getImageEntity(iiifUrl: String): ImageEntity {
     return ImageEntity(
-        id = getString("id")!!,
+        id = getString("id"),
         url = getImageUrl(iiifUrl),
-        title = getString("title")!!,
+        title = getString("title"),
         inscriptions = getString("inscriptions"),
         creditLine = getString("credit_line"),
         publicationHistory = getString("publication_history"),
@@ -39,7 +39,7 @@ fun JsonObject.getIiifUrl(): String {
 }
 
 fun JsonObject.getImageUrl(iiifUrl: String): String {
-    val imageId = if (this.get("image_id").isJsonNull) "" else this.getString("image_id")!!
+    val imageId = if (this.get("image_id").isJsonNull) "" else this.getString("image_id")
     return "$iiifUrl/$imageId/full/843,/0/default.jpg"
 }
 

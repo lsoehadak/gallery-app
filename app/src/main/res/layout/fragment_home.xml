@@ -62,4 +62,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
+    <include
+        android:id="@+id/empty_state_container"
+        layout="@layout/layout_empty_state"
+        android:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

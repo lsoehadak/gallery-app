@@ -3,6 +3,14 @@
     <string name="home">Home</string>
     <string name="saved">Saved</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_bar_hint">Type your search here...</string>
+
+    <string name="no_search_result_title">No Result</string>
+    <string name="no_search_result_message">We can\'t find any item matching your search, try another keyword</string>
+    <string name="no_saved_image_title">No Saved Image</string>
+    <string name="no_saved_image_message">Saved images will show up here, so you can easily view them here later</string>
+    <string name="save_image">Save Image</string>
+    <string name="error_request_title">Oops Something Went Wrong</string>
+    <string name="request_time_out_title">Request Time Out</string>
+    <string name="request_time_out_message">Please make sure you have a good internet connection and try again</string>
 </resources>

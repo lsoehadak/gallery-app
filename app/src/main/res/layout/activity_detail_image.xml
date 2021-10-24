@@ -21,11 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStart="24dp"
-            app:contentInsetStartWithNavigation="0dp" />
+            app:contentInsetStartWithNavigation="0dp"
+            app:titleTextAppearance="@style/ToolbarTitleTextAppearance" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"

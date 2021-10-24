@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lsoehadak.galleryapp.R
 import com.lsoehadak.galleryapp.data.ImageDB
 import com.lsoehadak.galleryapp.data.ImageEntity
 import com.lsoehadak.galleryapp.databinding.FragmentSavedImageBinding
@@ -65,9 +66,15 @@ class SavedImageFragment : Fragment() {
         }
     }
 
-    private fun removeImage(image:ImageEntity) {
+    private fun removeImage(image: ImageEntity) {
         CoroutineScope(Dispatchers.IO).launch {
             db.imageDao().removeImage(image)
+            savedImages.remove(image)
+            if (savedImages.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    updateView()
+                }
+            }
         }
     }
 
@@ -77,6 +84,21 @@ class SavedImageFragment : Fragment() {
             val savedImages = db.imageDao().getSavedImages()
             withContext(Dispatchers.Main) {
                 savedImageAdapter.addNewData(savedImages)
+                updateView()
+            }
+        }
+    }
+
+    private fun updateView() {
+        if (savedImages.isNotEmpty()) {
+            fragmentSavedImageBinding.emptyStateContainer.root.visibility = View.GONE
+            fragmentSavedImageBinding.rvSavedImage.visibility = View.VISIBLE
+        } else {
+            fragmentSavedImageBinding.emptyStateContainer.root.visibility = View.VISIBLE
+            fragmentSavedImageBinding.rvSavedImage.visibility = View.GONE
+            with(fragmentSavedImageBinding.emptyStateContainer) {
+                tvErrorTitle.text = getString(R.string.no_saved_image_title)
+                tvErrorMessage.text = getString(R.string.no_saved_image_message)
             }
         }
     }

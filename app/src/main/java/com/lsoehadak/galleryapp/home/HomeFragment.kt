@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lsoehadak.galleryapp.R
 import com.lsoehadak.galleryapp.data.ImageEntity
 import com.lsoehadak.galleryapp.databinding.FragmentHomeBinding
 import com.lsoehadak.galleryapp.detail.DetailImageActivity
@@ -115,21 +116,22 @@ class HomeFragment : Fragment() {
     }
 
     private fun initGetImages() {
-        imageList.clear()
+        imageAdapter.clearData()
         page = 1
 
         fragmentHomeBinding.rvImage.visibility = View.GONE
+        fragmentHomeBinding.emptyStateContainer.root.visibility = View.GONE
         fragmentHomeBinding.progressBar.visibility = View.VISIBLE
 
         getImages()
     }
 
     private fun initSearchImages(keyword: String) {
-        Log.e("search for", keyword)
-        imageList.clear()
+        imageAdapter.clearData()
         page = 1
 
         fragmentHomeBinding.rvImage.visibility = View.GONE
+        fragmentHomeBinding.emptyStateContainer.root.visibility = View.GONE
         fragmentHomeBinding.progressBar.visibility = View.VISIBLE
 
         searchImages(keyword)
@@ -168,13 +170,44 @@ class HomeFragment : Fragment() {
                         }
 
                         fragmentHomeBinding.rvImage.visibility = View.VISIBLE
+                        fragmentHomeBinding.emptyStateContainer.root.visibility = View.GONE
                         fragmentHomeBinding.progressBar.visibility = View.GONE
+                    } else {
+                        if (imageAdapter.itemCount == 0) {
+                            fragmentHomeBinding.rvImage.visibility = View.GONE
+                            fragmentHomeBinding.emptyStateContainer.root.visibility = View.VISIBLE
+                            fragmentHomeBinding.progressBar.visibility = View.GONE
+
+                            with(fragmentHomeBinding.emptyStateContainer) {
+                                tvErrorTitle.text = getString(R.string.error_request_title)
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.error_request_title),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }, onRequestFailure = {
-                // TODO on failure handle
                 if (activity != null) {
+                    if (imageAdapter.itemCount == 0) {
+                        fragmentHomeBinding.rvImage.visibility = View.GONE
+                        fragmentHomeBinding.emptyStateContainer.root.visibility = View.VISIBLE
+                        fragmentHomeBinding.progressBar.visibility = View.GONE
 
+                        with(fragmentHomeBinding.emptyStateContainer) {
+                            tvErrorTitle.text = getString(R.string.request_time_out_title)
+                            tvErrorMessage.text = getString(R.string.request_time_out_message)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.request_time_out_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         )
@@ -207,13 +240,57 @@ class HomeFragment : Fragment() {
                             ids.add(dataObj.getString("id"))
                         }
 
-                        getImagesInfo(ids, 0)
+                        if (ids.isNotEmpty()) {
+                            getImagesInfo(ids, 0)
+                        } else {
+                            fragmentHomeBinding.rvImage.visibility = View.GONE
+                            fragmentHomeBinding.emptyStateContainer.root.visibility = View.VISIBLE
+                            fragmentHomeBinding.progressBar.visibility = View.GONE
+
+                            with(fragmentHomeBinding.emptyStateContainer) {
+                                fragmentHomeBinding.etSearchImage.isEnabled = true
+                                tvErrorTitle.text = getString(R.string.no_search_result_title)
+                                tvErrorMessage.text = getString(R.string.no_search_result_message)
+                            }
+                        }
+                    } else {
+                        if (imageAdapter.itemCount == 0) {
+                            fragmentHomeBinding.rvImage.visibility = View.GONE
+                            fragmentHomeBinding.emptyStateContainer.root.visibility = View.VISIBLE
+                            fragmentHomeBinding.progressBar.visibility = View.GONE
+
+                            with(fragmentHomeBinding.emptyStateContainer) {
+                                tvErrorTitle.text = getString(R.string.error_request_title)
+                                fragmentHomeBinding.etSearchImage.isEnabled = true
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.error_request_title),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }, onRequestFailure = {
-                // TODO on failure handle
                 if (activity != null) {
+                    if (imageAdapter.itemCount == 0) {
+                        fragmentHomeBinding.rvImage.visibility = View.GONE
+                        fragmentHomeBinding.emptyStateContainer.root.visibility = View.VISIBLE
+                        fragmentHomeBinding.progressBar.visibility = View.GONE
 
+                        with(fragmentHomeBinding.emptyStateContainer) {
+                            tvErrorTitle.text = getString(R.string.request_time_out_title)
+                            tvErrorMessage.text = getString(R.string.request_time_out_message)
+                            fragmentHomeBinding.etSearchImage.isEnabled = true
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.request_time_out_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         )
@@ -233,8 +310,6 @@ class HomeFragment : Fragment() {
                         if (index < ids.size - 1) {
                             getImagesInfo(ids, index + 1)
                         } else {
-//                            Log.e("total index", ids.size.toString())
-//                            Log.e("page", page.toString())
                             imageAdapter.removeNullData()
 
                             imageAdapter.addNewData(searchImageResult)
@@ -246,14 +321,38 @@ class HomeFragment : Fragment() {
 
                             fragmentHomeBinding.etSearchImage.isEnabled = true
                             fragmentHomeBinding.rvImage.visibility = View.VISIBLE
+                            fragmentHomeBinding.emptyStateContainer.root.visibility = View.GONE
                             fragmentHomeBinding.progressBar.visibility = View.GONE
+                        }
+                    } else {
+                        fragmentHomeBinding.rvImage.visibility = View.GONE
+                        fragmentHomeBinding.emptyStateContainer.root.visibility = View.VISIBLE
+                        fragmentHomeBinding.progressBar.visibility = View.GONE
+
+                        with(fragmentHomeBinding.emptyStateContainer) {
+                            tvErrorTitle.text = getString(R.string.error_request_title)
                         }
                     }
                 }
             }, onRequestFailure = {
-                // TODO on failure handle
                 if (activity != null) {
+                    if (index < ids.size - 1) {
+                        getImagesInfo(ids, index + 1)
+                    } else {
+                        imageAdapter.removeNullData()
 
+                        imageAdapter.addNewData(searchImageResult)
+
+                        if (page < totalPage) {
+                            imageAdapter.addNullData()
+                            isLoading = false
+                        }
+
+                        fragmentHomeBinding.etSearchImage.isEnabled = true
+                        fragmentHomeBinding.rvImage.visibility = View.VISIBLE
+                        fragmentHomeBinding.emptyStateContainer.root.visibility = View.GONE
+                        fragmentHomeBinding.progressBar.visibility = View.GONE
+                    }
                 }
             }
         )

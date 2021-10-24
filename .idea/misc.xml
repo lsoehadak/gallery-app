@@ -13,7 +13,7 @@
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/drawable/ic_refresh_black.xml" value="0.528125" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/drawable/ic_save.xml" value="0.321875" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/drawable/ic_saved.xml" value="0.321875" />
-        <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/activity_detail_image.xml" value="0.5255208333333333" />
+        <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/activity_detail_image.xml" value="0.3912162162162162" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/activity_main.xml" value="0.5255208333333333" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/fragment_saved_image.xml" value="0.5078125" />
@@ -21,6 +21,7 @@
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/item_progress.xml" value="0.5255208333333333" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/item_saved_iamge.xml" value="0.5255208333333333" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/item_saved_image.xml" value="0.75" />
+        <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/layout/layout_empty_state.xml" value="0.5255208333333333" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/menu/menu_detail_image.xml" value="0.5078125" />
         <entry key="..\:/Users/lsoeh/Documents/Programming/Android/Experiment Project/GalleryApp/app/src/main/res/menu/menu_main_bottom_navigation.xml" value="0.5255208333333333" />
       </map>

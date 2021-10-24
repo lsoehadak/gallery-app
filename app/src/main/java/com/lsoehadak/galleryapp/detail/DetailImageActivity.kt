@@ -1,6 +1,8 @@
 package com.lsoehadak.galleryapp.detail
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -38,9 +40,23 @@ class DetailImageActivity : AppCompatActivity() {
         image = intent.getParcelableExtra(EXTRA_IMAGE_ENTITY)!!
 
         with(activityDetailImageBinding) {
+            toolbar.title = ""
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayShowTitleEnabled(false)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                    if (scrollY > tvTitle.y + tvTitle.height) {
+                        if (toolbar.title.toString().isEmpty()) {
+                            toolbar.title = image.title
+                        }
+                    } else {
+                        if (toolbar.title.toString().isNotEmpty()) {
+                            toolbar.title = ""
+                        }
+                    }
+                }
+            }
 
             Glide.with(this@DetailImageActivity)
                 .load(image.url)

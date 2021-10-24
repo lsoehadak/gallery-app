@@ -83,6 +83,12 @@ class ImageAdapter(
         }
     }
 
+    fun clearData() {
+        val size = items.size
+        this.items.clear()
+        notifyItemRangeRemoved(0, size);
+    }
+
     fun addNewData(items: List<ImageEntity>) {
         val size = this.items.size
         this.items.addAll(items)
